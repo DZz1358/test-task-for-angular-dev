@@ -3,8 +3,6 @@
  */
 
 // // Set Font Awesome font path
-// $fa-font-path: "@fortawesome/fontawesome-free/webfonts";
-
 // ---------------------------------------------------------------------------
 // Bootstrap variables
 //
@@ -49,7 +47,5 @@ $theme-colors: (
   dark: $gray-800,
 );
 
-// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
-// in components.
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
+// Bootstrap default spacing scale base.
+$spacer: 1rem;

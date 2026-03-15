@@ -11,7 +11,7 @@ import { environment } from '@env/environment';
   providedIn: 'root',
 })
 export class ApiPrefixInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (!/^(http|https):/i.test(request.url)) {
       request = request.clone({ url: environment.serverUrl + request.url });
     }

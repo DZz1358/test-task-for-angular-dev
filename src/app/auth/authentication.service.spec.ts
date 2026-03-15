@@ -7,6 +7,7 @@ import { MockCredentialsService } from './credentials.service.mock';
 describe('AuthenticationService', () => {
   let authenticationService: AuthenticationService;
   let credentialsService: MockCredentialsService;
+  let setCredentialsSpy: jest.SpiedFunction<MockCredentialsService['setCredentials']>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +17,7 @@ describe('AuthenticationService', () => {
     authenticationService = TestBed.inject(AuthenticationService);
     credentialsService = TestBed.inject(CredentialsService);
     credentialsService.credentials = null;
-    spyOn(credentialsService, 'setCredentials').and.callThrough();
+    setCredentialsSpy = jest.spyOn(credentialsService, 'setCredentials');
   });
 
   describe('login', () => {
@@ -64,8 +65,8 @@ describe('AuthenticationService', () => {
 
       // Assert
       request.subscribe(() => {
-        expect(credentialsService.setCredentials).toHaveBeenCalled();
-        expect((credentialsService.setCredentials as jasmine.Spy).calls.mostRecent().args[1]).toBe(undefined);
+        expect(setCredentialsSpy).toHaveBeenCalled();
+        expect(setCredentialsSpy.mock.lastCall?.[1]).toBeUndefined();
       });
     }));
 
@@ -80,8 +81,8 @@ describe('AuthenticationService', () => {
 
       // Assert
       request.subscribe(() => {
-        expect(credentialsService.setCredentials).toHaveBeenCalled();
-        expect((credentialsService.setCredentials as jasmine.Spy).calls.mostRecent().args[1]).toBe(true);
+        expect(setCredentialsSpy).toHaveBeenCalled();
+        expect(setCredentialsSpy.mock.lastCall?.[1]).toBe(true);
       });
     }));
   });

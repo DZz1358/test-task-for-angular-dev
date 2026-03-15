@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -28,7 +27,7 @@ describe('ErrorHandlerInterceptor', () => {
     });
 
     http = TestBed.inject(HttpClient);
-    httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -39,16 +38,19 @@ describe('ErrorHandlerInterceptor', () => {
     // Arrange
     // Note: here we spy on private method since target is customization here,
     // but you should replace it by actual behavior in your app
-    spyOn(ErrorHandlerInterceptor.prototype as any, 'errorHandler').and.callThrough();
+    const errorHandlerSpy = jest.spyOn(
+      ErrorHandlerInterceptor.prototype as ErrorHandlerInterceptor,
+      'errorHandler' as keyof ErrorHandlerInterceptor
+    );
 
     // Act
-    http.get('/toto').subscribe(
-      () => fail('should error'),
-      () => {
+    http.get('/toto').subscribe({
+      next: () => fail('should error'),
+      error: () => {
         // Assert
-        expect((ErrorHandlerInterceptor.prototype as any).errorHandler).toHaveBeenCalled();
-      }
-    );
+        expect(errorHandlerSpy).toHaveBeenCalled();
+      },
+    });
 
     httpMock.expectOne({}).flush(null, {
       status: 404,

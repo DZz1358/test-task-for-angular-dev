@@ -60,7 +60,7 @@
                   "maximumError": "10kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": "ngsw-config.json",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -116,6 +116,12 @@
             "production": {
               "devServerTarget": "ng-x-rocket:serve:production"
             }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

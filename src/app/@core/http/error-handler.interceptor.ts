@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -15,16 +15,16 @@ const log = new Logger('ErrorHandlerInterceptor');
   providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(catchError((error) => this.errorHandler(error)));
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request).pipe(catchError((error: HttpErrorResponse) => this.errorHandler(error)));
   }
 
   // Customize the default error handler here if needed
-  private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
+  private errorHandler(response: HttpErrorResponse): Observable<never> {
     if (!environment.production) {
       // Do something with the error
       log.error('Request error', response);
     }
-    throw response;
+    return throwError(() => response);
   }
 }

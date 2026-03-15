@@ -1,8 +1,6 @@
-import 'jest-preset-angular';
-
-/* global mocks for jsdom */
+// Global mocks for jsdom.
 const storageMock = () => {
-  let storage: { [key: string]: string } = {};
+  let storage: Record<string, string> = {};
   return {
     getItem: (key: string) => (key in storage ? storage[key] : null),
     setItem: (key: string, value: string) => (storage[key] = value || ''),
@@ -11,38 +9,36 @@ const storageMock = () => {
   };
 };
 
-Object.defineProperty(window, 'localStorage', { value: storageMock() });
-Object.defineProperty(window, 'sessionStorage', { value: storageMock() });
-Object.defineProperty(window, 'getComputedStyle', {
-  value: () => ['-webkit-appearance'],
-});
+Object.defineProperty(window, 'localStorage', { configurable: true, value: storageMock() });
+Object.defineProperty(window, 'sessionStorage', { configurable: true, value: storageMock() });
+const noop = (): void => undefined;
+const getComputedStyleMock = (): CSSStyleDeclaration =>
+  (({
+    getPropertyValue: (_property: string): string => '',
+    length: 0,
+    item: (_index: number): string | null => null,
+    0: '-webkit-appearance',
+  } as unknown) as CSSStyleDeclaration);
 
-Object.defineProperty(document.body.style, 'transform', {
-  value: () => {
-    return {
-      enumerable: true,
-      configurable: true,
-    };
-  },
-});
-
-Object.defineProperty(window, 'getComputedStyle', {
-  value: () => ({
-    getPropertyValue: (prop: any) => {
-      return '';
-    },
-  }),
-});
-
-Object.defineProperty(window, 'matchMedia', {
-  value: (query: any) => ({
+const matchMediaMock = (query: string): MediaQueryList =>
+  ({
     matches: false,
     media: query,
-    onchange: null as any,
-    addListener: () => {},
-    removeListener: () => {},
-  }),
+    onchange: null as MediaQueryList['onchange'],
+    addEventListener: noop,
+    removeEventListener: noop,
+    addListener: noop,
+    removeListener: noop,
+    dispatchEvent: (_event: Event): boolean => false,
+  } as MediaQueryList);
+
+Object.defineProperty(window, 'getComputedStyle', {
+  configurable: true,
+  value: getComputedStyleMock,
 });
+
+document.body.style.transform = '';
+window.matchMedia = matchMediaMock;
 
 /* output shorter and more meaningful Zone error stack traces */
 // Error.stackTraceLimit = 2;

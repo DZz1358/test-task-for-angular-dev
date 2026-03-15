@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-loader',
@@ -6,11 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./loader.component.scss'],
   standalone: false,
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
   @Input() isLoading = false;
   @Input() message: string | undefined;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

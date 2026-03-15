@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
 import { CredentialsService } from './credentials.service';
 import { MockCredentialsService } from './credentials.service.mock';
@@ -8,16 +8,18 @@ import { AuthenticationGuard } from './authentication.guard';
 describe('AuthenticationGuard', () => {
   let authenticationGuard: AuthenticationGuard;
   let credentialsService: MockCredentialsService;
-  let mockRouter: any;
-  let mockSnapshot: any;
+  let mockRouter: { navigate: jest.Mock; url?: string };
+  let mockSnapshot: RouterStateSnapshot;
 
   beforeEach(() => {
     mockRouter = {
       navigate: jest.fn(),
     };
-    mockSnapshot = jest.fn(() => ({
+    mockSnapshot = ({
+      root: new ActivatedRouteSnapshot(),
+      url: '',
       toString: jest.fn(),
-    }));
+    } as unknown) as RouterStateSnapshot;
 
     TestBed.configureTestingModule({
       providers: [
@@ -48,7 +50,7 @@ describe('AuthenticationGuard', () => {
 
     // Assert
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/login'], {
-      queryParams: { redirect: undefined },
+      queryParams: { redirect: '' },
       replaceUrl: true,
     });
     expect(result).toBe(false);

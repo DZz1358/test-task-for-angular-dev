@@ -13,8 +13,9 @@
     "importHelpers": true,
     "noImplicitAny": true,
     "target": "ES2022",
+    "types": [],
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2018", "dom"],
+    "lib": ["ES2022", "dom"],
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/app/*"],
@@ -30,5 +31,6 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "preserveWhitespaces": true
-  }
+  },
+  "exclude": ["src/**/*.spec.ts", "src/**/*.mock.ts", "src/setup-jest.ts", "src/test-config.helper.ts", "e2e/**/*.ts"]
 }

@@ -3,7 +3,6 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoaderComponent } from './loader.component';
 
 describe('LoaderComponent', () => {
-  let component: LoaderComponent;
   let fixture: ComponentFixture<LoaderComponent>;
 
   beforeEach(
@@ -16,7 +15,6 @@ describe('LoaderComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoaderComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

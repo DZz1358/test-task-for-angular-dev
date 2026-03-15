@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -16,7 +15,7 @@ describe('QuoteService', () => {
     });
 
     quoteService = TestBed.inject(QuoteService);
-    httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {

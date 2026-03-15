@@ -8,17 +8,19 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class RouteReusableStrategy extends RouteReuseStrategy {
-  public shouldDetach(route: ActivatedRouteSnapshot): boolean {
+  public shouldDetach(_route: ActivatedRouteSnapshot): boolean {
     return false;
   }
 
-  public store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle | null): void {}
+  public store(_route: ActivatedRouteSnapshot, _detachedTree: DetachedRouteHandle | null): void {
+    return;
+  }
 
-  public shouldAttach(route: ActivatedRouteSnapshot): boolean {
+  public shouldAttach(_route: ActivatedRouteSnapshot): boolean {
     return false;
   }
 
-  public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
+  public retrieve(_route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     return null;
   }
 

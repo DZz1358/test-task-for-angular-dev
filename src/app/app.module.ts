@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,8 +18,6 @@ import { AppRoutingModule } from './app-routing.module';
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    FormsModule,
     TranslateModule.forRoot(),
     NgbModule,
     CoreModule,
@@ -31,6 +27,6 @@ import { AppRoutingModule } from './app-routing.module';
     AuthModule,
     AppRoutingModule,
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [provideServiceWorker('ngsw-worker.js', { enabled: environment.production })],
 })
 export class AppModule {}

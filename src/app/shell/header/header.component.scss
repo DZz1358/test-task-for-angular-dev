@@ -1,7 +1,7 @@
-@import "src/theme/theme-variables";
+@use "src/theme/theme-variables" as theme;
 
 .navbar {
-  margin-bottom: $spacer;
+  margin-bottom: theme.$spacer;
 }
 
 .nav-link.dropdown-toggle {

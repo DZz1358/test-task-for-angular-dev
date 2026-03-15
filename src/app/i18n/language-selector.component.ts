@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { I18nService } from './i18n.service';
 
@@ -8,13 +8,11 @@ import { I18nService } from './i18n.service';
   styleUrls: ['./language-selector.component.scss'],
   standalone: false,
 })
-export class LanguageSelectorComponent implements OnInit {
+export class LanguageSelectorComponent {
   @Input() inNavbar = false;
   @Input() menuClass = '';
 
   constructor(private i18nService: I18nService) {}
-
-  ngOnInit() {}
 
   setLanguage(language: string) {
     this.i18nService.language = language;
