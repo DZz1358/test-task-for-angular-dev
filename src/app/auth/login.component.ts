@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -18,13 +18,13 @@ const log = new Logger('Login');
 export class LoginComponent implements OnInit {
   version: string | null = environment.version;
   error: string | undefined;
-  loginForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
   isLoading = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService
   ) {
     this.createForm();
