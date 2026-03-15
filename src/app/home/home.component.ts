@@ -7,6 +7,7 @@ import { QuoteService } from './quote.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   quote: string | undefined;
