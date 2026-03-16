@@ -1,23 +1,22 @@
 {
-  "name": "ng-x-rocket",
+  "name": "ng-x-rocket-workspace",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build": "npm run write:env -s && ng build --configuration production",
-    "start": "npm run write:env -s && ng serve --proxy-config proxy.conf.js",
-    "serve:sw": "npm run build -s && npx http-server ./dist/browser -p 4200",
-    "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
-    "test": "npm run write:env -s && ng test",
-    "test:ci": "npm run write:env -s && npm run lint -s && ng test --configuration=ci",
-    "e2e": "npm run write:env -s && ng e2e",
-    "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean --sort",
+    "build": "npm run write:env -s && nx build ng-x-rocket --configuration production",
+    "start": "npm run write:env -s && nx serve ng-x-rocket",
+    "serve:sw": "npm run build -s && npx http-server ./dist/apps/ng-x-rocket/browser -p 4200",
+    "lint": "nx lint ng-x-rocket && stylelint \"apps/ng-x-rocket/src/**/*.scss\" --syntax scss && htmlhint \"apps/ng-x-rocket/src\" --config .htmlhintrc",
+    "test": "npm run write:env -s && nx test ng-x-rocket",
+    "test:ci": "npm run write:env -s && npm run lint -s && nx test ng-x-rocket --configuration=ci",
+    "e2e": "npm run write:env -s && nx e2e ng-x-rocket-e2e",
+    "translations:extract": "ngx-translate-extract --input ./apps/ng-x-rocket/src --output ./apps/ng-x-rocket/src/translations/template.json --format=json --clean --sort",
     "docs": "hads ./docs -o",
-    "write:env": "ngx-scripts env npm_package_version",
-    "prettier": "prettier --write \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
-    "prettier:check": "prettier --list-different \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
-    "postinstall": "npm run prettier -s",
-    "generate": "ng generate"
+    "write:env": "ngx-scripts env npm_package_version --out apps/ng-x-rocket/src/environments/.env.ts",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "generate": "nx generate"
   },
   "dependencies": {
     "@angular/animations": "^20.3.18",
@@ -37,18 +36,27 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "rxjs": "^6.6.3",
-    "tslib": "^2.0.1",
+    "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
     "@angular-builders/jest": "^20.0.0",
     "@angular-devkit/build-angular": "^20.3.20",
+    "@angular-devkit/core": "^20.3.20",
+    "@angular-devkit/schematics": "^20.3.20",
     "@angular/cli": "^20.3.20",
     "@angular/compiler-cli": "^20.3.18",
     "@angular/language-service": "^20.3.18",
     "@biesbjerg/ngx-translate-extract": "^7.0.3",
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngx-rocket/scripts": "^5.0.0",
+    "@nx/angular": "22.5.4",
+    "@nx/js": "22.5.4",
+    "@nx/workspace": "22.5.4",
+    "@schematics/angular": "^20.3.20",
+    "@swc-node/register": "~1.11.1",
+    "@swc/core": "~1.15.5",
+    "@swc/helpers": "~0.5.18",
     "@types/jasmine": "^3.6.2",
     "@types/jasminewd2": "^2.0.8",
     "@types/jest": "^29.5.14",
@@ -63,7 +71,8 @@
     "jasmine-spec-reporter": "~6.0.0",
     "jest": "^29.7.0",
     "jest-preset-angular": "^14.6.0",
-    "prettier": "^2.2.1",
+    "nx": "22.5.4",
+    "prettier": "~3.6.2",
     "pretty-quick": "^3.1.0",
     "protractor": "~7.0.0",
     "stylelint": "~13.8.0",
@@ -90,5 +99,6 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "nx": {}
 }

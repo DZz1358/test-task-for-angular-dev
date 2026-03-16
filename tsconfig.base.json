@@ -1,0 +1,44 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "noImplicitAny": true,
+    "target": "ES2022",
+    "types": [],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["ES2022", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["apps/ng-x-rocket/src/app/*"],
+      "@core": ["apps/ng-x-rocket/src/app/@core"],
+      "@core/*": ["apps/ng-x-rocket/src/app/@core/*"],
+      "@shared": ["apps/ng-x-rocket/src/app/@shared"],
+      "@shared/*": ["apps/ng-x-rocket/src/app/@shared/*"],
+      "@env/*": ["apps/ng-x-rocket/src/environments/*"]
+    },
+    "useDefineForClassFields": false,
+    "rootDir": "."
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "preserveWhitespaces": true
+  },
+  "exclude": [
+    "apps/ng-x-rocket/src/**/*.spec.ts",
+    "apps/ng-x-rocket/src/**/*.mock.ts",
+    "apps/ng-x-rocket/src/setup-jest.ts",
+    "apps/ng-x-rocket/src/test-config.helper.ts",
+    "apps/ng-x-rocket-e2e/**/*.ts",
+    "node_modules",
+    "tmp"
+  ]
+}

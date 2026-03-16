@@ -1,0 +1,18 @@
+<div [ngClass]="{ 'nav-item': inNavbar }" ngbDropdown>
+  @if (inNavbar) {
+    <a id="language-dropdown" class="nav-link" ngbDropdownToggle>
+      {{ currentLanguage | translate }}
+    </a>
+  } @else {
+    <button id="language-dropdown" class="btn btn-sm btn-secondary" ngbDropdownToggle>
+      {{ currentLanguage }}
+    </button>
+  }
+  <div ngbDropdownMenu aria-labelledby="language-dropdown" [ngClass]="menuClass">
+    @for (language of languages; track language) {
+      <button class="dropdown-item" (click)="setLanguage(language)">
+        {{ language | translate }}
+      </button>
+    }
+  </div>
+</div>

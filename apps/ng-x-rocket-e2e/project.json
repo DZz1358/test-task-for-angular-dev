@@ -1,0 +1,22 @@
+{
+  "name": "ng-x-rocket-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ng-x-rocket-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@angular-devkit/build-angular:protractor",
+      "options": {
+        "protractorConfig": "apps/ng-x-rocket-e2e/protractor.conf.js",
+        "devServerTarget": "ng-x-rocket:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ng-x-rocket:serve:production"
+        }
+      }
+    }
+  },
+  "implicitDependencies": ["ng-x-rocket"],
+  "tags": []
+}

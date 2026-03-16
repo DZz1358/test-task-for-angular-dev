@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/spec",
+    "allowJs": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2016",
+    "types": ["jest", "node"]
+  },
+  "files": ["src/polyfills.ts"],
+  "include": ["src/**/*.spec.ts", "src/**/*.mock.ts", "src/**/*.d.ts", "src/setup-jest.ts", "src/test-config.helper.ts"]
+}
