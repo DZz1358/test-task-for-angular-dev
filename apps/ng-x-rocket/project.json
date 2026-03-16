@@ -26,7 +26,11 @@
           "apps/ng-x-rocket/src/manifest.webmanifest",
           "apps/ng-x-rocket/src/assets"
         ],
-        "styles": ["node_modules/@fortawesome/fontawesome-free/css/all.min.css", "apps/ng-x-rocket/src/main.scss"],
+        "styles": [
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+          "apps/ng-x-rocket/src/main.scss",
+          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+        ],
         "scripts": [],
         "extractLicenses": false,
         "sourceMap": true,
