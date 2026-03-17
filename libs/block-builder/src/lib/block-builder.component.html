@@ -1,0 +1,54 @@
+<section class="block-builder">
+  <div
+    class="block-builder__list"
+    cdkDropList
+    [cdkDropListData]="blocks()"
+    (cdkDropListDropped)="reorderBlocks($event)"
+  >
+    @for (block of blocks(); track trackBlock($index, block)) {
+      <mat-card class="block-builder__card" appearance="outlined" cdkDrag>
+        <mat-card-content class="block-builder__card-content">
+          <button
+            type="button"
+            mat-stroked-button
+            cdkDragHandle
+            class="block-builder__handle"
+            aria-label="Reorder block"
+          >
+            Reorder
+          </button>
+
+          <mat-form-field appearance="outline" class="block-builder__field">
+            <mat-label>Field</mat-label>
+            <mat-select [value]="block.selectedKey" (selectionChange)="changeBlockKey(block.id, $event.value)">
+              @for (field of availableFields(); track field.key) {
+                <mat-option [value]="field.key">{{ field.key }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <div class="block-builder__value">
+            <span class="block-builder__value-label">Value</span>
+            <span class="block-builder__value-text">{{ displayValue(block.selectedKey) }}</span>
+          </div>
+
+          <button type="button" mat-button color="warn" (click)="removeBlock(block.id)">Remove</button>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  @if (!availableFields().length) {
+    <p class="block-builder__empty">No flat top-level fields available.</p>
+  }
+
+  <button
+    type="button"
+    mat-stroked-button
+    class="block-builder__add-button"
+    (click)="addBlock()"
+    [disabled]="!canAddBlock()"
+  >
+    Add block
+  </button>
+</section>

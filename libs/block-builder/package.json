@@ -1,0 +1,14 @@
+{
+  "name": "@ng-x-rocket/block-builder",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/cdk": "^20.2.0",
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/material": "^20.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
