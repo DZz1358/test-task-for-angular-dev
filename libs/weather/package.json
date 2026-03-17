@@ -1,0 +1,15 @@
+{
+  "name": "@ng-x-rocket/weather",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/material": "^20.2.0",
+    "@ng-x-rocket/block-builder": "^0.0.1",
+    "rxjs": "^6.6.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

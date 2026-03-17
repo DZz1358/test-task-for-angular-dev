@@ -13,5 +13,9 @@ module.exports = {
     '^@shared/(.*)$': '<rootDir>/src/app/@shared/$1',
     '^@env$': '<rootDir>/src/environments/environment',
     '^@env/(.*)$': '<rootDir>/src/environments/$1',
+    '^@ng-x-rocket/block-builder$': '<rootDir>/../../libs/block-builder/src/index.ts',
+    '^@ng-x-rocket/weather$': '<rootDir>/../../libs/weather/src/index.ts',
+    '^@ng-x-rocket/weather/state$': '<rootDir>/../../libs/weather/state/src/index.ts',
+    '^@ng-x-rocket/weather/ui$': '<rootDir>/../../libs/weather/ui/src/index.ts',
   },
 };

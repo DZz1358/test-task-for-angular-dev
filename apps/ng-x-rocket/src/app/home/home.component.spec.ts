@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
+import { WeatherUiComponent } from '@ng-x-rocket/weather/ui';
 import { HomeComponent } from './home.component';
 import { QuoteService } from './quote.service';
 
@@ -12,7 +13,7 @@ describe('HomeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CoreModule, SharedModule, HttpClientTestingModule],
+      imports: [CoreModule, SharedModule, HttpClientTestingModule, WeatherUiComponent],
       declarations: [HomeComponent],
       providers: [QuoteService],
     }).compileComponents();

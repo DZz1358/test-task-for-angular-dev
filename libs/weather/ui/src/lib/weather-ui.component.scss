@@ -1,0 +1,21 @@
+.weather-ui {
+  display: block;
+}
+
+.weather-ui__header {
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.weather-ui__content {
+  padding-top: 16px;
+}
+
+.weather-ui__message {
+  margin: 0;
+}
+
+.weather-ui__message--error {
+  color: #b3261e;
+}

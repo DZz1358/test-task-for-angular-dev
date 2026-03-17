@@ -1,0 +1,20 @@
+<mat-card class="weather-ui" appearance="outlined">
+  <mat-card-header class="weather-ui__header">
+    <div>
+      <mat-card-title>Weather</mat-card-title>
+      <mat-card-subtitle>Current conditions for {{ weatherState.locationLabel() }}</mat-card-subtitle>
+    </div>
+
+    <button type="button" mat-stroked-button (click)="refresh()" [disabled]="weatherState.isLoading()">Refresh</button>
+  </mat-card-header>
+
+  <mat-card-content class="weather-ui__content">
+    @if (weatherState.isLoading()) {
+      <p class="weather-ui__message">Loading weather...</p>
+    } @else if (weatherState.hasError()) {
+      <p class="weather-ui__message weather-ui__message--error">{{ weatherState.error() }}</p>
+    } @else if (weatherState.flatWeather(); as flatWeather) {
+      <app-block-builder [data]="flatWeather"></app-block-builder>
+    }
+  </mat-card-content>
+</mat-card>
