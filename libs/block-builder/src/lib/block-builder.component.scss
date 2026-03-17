@@ -7,9 +7,29 @@
   gap: 1rem;
 }
 
+.block-builder__timer-status {
+  margin: 0;
+  color: var(--mat-sys-primary, #1976d2);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 .block-builder__list {
   display: grid;
   gap: 1rem;
+}
+
+.block-builder__card {
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.block-builder__card--active {
+  border-color: var(--mat-sys-primary, #1976d2);
+  background-color: rgba(25, 118, 210, 0.06);
+  box-shadow: 0 0 0 1px rgba(25, 118, 210, 0.18);
 }
 
 .block-builder__card-content {

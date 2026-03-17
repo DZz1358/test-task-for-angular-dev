@@ -1,12 +1,17 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
+import { timer } from 'rxjs';
+
 import { BlockBuilderBlock, BlockBuilderField, BlockBuilderInput, BlockBuilderScalar } from './block-builder.types';
+
+const TIMER_INTERVAL_MS = 60000;
 
 function isFlatScalar(value: unknown): value is BlockBuilderScalar {
   return (
@@ -55,14 +60,19 @@ function formatValue(value: BlockBuilderScalar): string {
 })
 export class BlockBuilderComponent {
   readonly data = input<BlockBuilderInput>(null);
+  readonly timerEnabled = input<boolean>(true);
 
   readonly availableFields = computed(() => extractFlatFields(this.data()));
   readonly availableKeys = computed(() => this.availableFields().map(({ key }) => key));
   readonly canAddBlock = computed(() => this.availableKeys().length > 0);
   readonly blocks = signal<BlockBuilderBlock[]>([]);
+  readonly activeTimerBlockId = signal<number | null>(null);
 
   private readonly fieldValues = computed(() => {
     return new Map<string, BlockBuilderScalar>(this.availableFields().map(({ key, value }) => [key, value]));
+  });
+  private readonly canActivateTimer = computed(() => {
+    return this.timerEnabled() && this.blocks().length > 0 && this.availableKeys().length > 1;
   });
 
   private nextBlockId = 0;
@@ -79,7 +89,29 @@ export class BlockBuilderComponent {
 
       this.previousKeysSignature = keysSignature;
       this.blocks.set(keys.map((key) => this.createBlock(key)));
+      this.activeTimerBlockId.set(null);
     });
+
+    effect(() => {
+      const activeTimerBlockId = this.activeTimerBlockId();
+      const blocks = this.blocks();
+
+      if (!this.canActivateTimer()) {
+        if (activeTimerBlockId !== null) {
+          this.activeTimerBlockId.set(null);
+        }
+
+        return;
+      }
+
+      if (activeTimerBlockId !== null && !blocks.some((block) => block.id === activeTimerBlockId)) {
+        this.activeTimerBlockId.set(null);
+      }
+    });
+
+    timer(TIMER_INTERVAL_MS, TIMER_INTERVAL_MS)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.activateRandomBlock());
   }
 
   addBlock(): void {
@@ -93,15 +125,25 @@ export class BlockBuilderComponent {
   }
 
   changeBlockKey(blockId: number, selectedKey: string): void {
-    if (!this.availableKeys().includes(selectedKey)) {
+    const currentBlock = this.blocks().find((block) => block.id === blockId);
+
+    if (!currentBlock || !this.availableKeys().includes(selectedKey) || currentBlock.selectedKey === selectedKey) {
       return;
     }
 
     this.blocks.update((blocks) => blocks.map((block) => (block.id === blockId ? { ...block, selectedKey } : block)));
+
+    if (this.activeTimerBlockId() === blockId) {
+      this.activeTimerBlockId.set(null);
+    }
   }
 
   removeBlock(blockId: number): void {
     this.blocks.update((blocks) => blocks.filter((block) => block.id !== blockId));
+
+    if (this.activeTimerBlockId() === blockId) {
+      this.activeTimerBlockId.set(null);
+    }
   }
 
   reorderBlocks(event: CdkDragDrop<BlockBuilderBlock[]>): void {
@@ -124,6 +166,10 @@ export class BlockBuilderComponent {
     return block.id;
   }
 
+  isTimerBlockActive(blockId: number): boolean {
+    return this.activeTimerBlockId() === blockId;
+  }
+
   private createBlock(selectedKey: string): BlockBuilderBlock {
     this.nextBlockId += 1;
 
@@ -143,5 +189,17 @@ export class BlockBuilderComponent {
     const usedKeys = new Set(this.blocks().map(({ selectedKey }) => selectedKey));
 
     return availableKeys.find((key) => !usedKeys.has(key)) ?? availableKeys[0];
+  }
+
+  private activateRandomBlock(): void {
+    if (!this.canActivateTimer() || this.activeTimerBlockId() !== null) {
+      return;
+    }
+
+    const blocks = this.blocks();
+    const randomIndex = Math.floor(Math.random() * blocks.length);
+    const nextActiveBlock = blocks[randomIndex];
+
+    this.activeTimerBlockId.set(nextActiveBlock?.id ?? null);
   }
 }

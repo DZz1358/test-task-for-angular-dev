@@ -1,4 +1,10 @@
 <section class="block-builder">
+  @if (activeTimerBlockId() !== null) {
+    <p class="block-builder__timer-status" aria-live="polite">
+      Timer selected a block. Change its field to clear the highlight.
+    </p>
+  }
+
   <div
     class="block-builder__list"
     cdkDropList
@@ -6,7 +12,12 @@
     (cdkDropListDropped)="reorderBlocks($event)"
   >
     @for (block of blocks(); track trackBlock($index, block)) {
-      <mat-card class="block-builder__card" appearance="outlined" cdkDrag>
+      <mat-card
+        class="block-builder__card"
+        [class.block-builder__card--active]="isTimerBlockActive(block.id)"
+        appearance="outlined"
+        cdkDrag
+      >
         <mat-card-content class="block-builder__card-content">
           <button
             type="button"
