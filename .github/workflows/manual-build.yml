@@ -1,0 +1,35 @@
+name: Manual Nx Build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ng-x-rocket
+    runs-on: ubuntu-latest
+    env:
+      NX_DAEMON: 'false'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Print tool versions
+        run: |
+          node --version
+          npx nx --version
+
+      - name: Build app
+        run: npx nx build ng-x-rocket
